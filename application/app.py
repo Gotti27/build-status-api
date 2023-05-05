@@ -107,7 +107,7 @@ class Project(Resource):
             color = "green"
         elif project.status == 'failed':
             color = "red"
-        return redirect(get_badge("build", project.status, color, "github"), 202)
+        return redirect(get_badge("build", project.status, color, "github"), code=302)
 
     @api_required
     def post(self, project_id):
