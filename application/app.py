@@ -4,7 +4,7 @@ import uuid
 from hmac import compare_digest
 from urllib import request
 
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, redirect
 from flask_restful import reqparse, Api, Resource
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
@@ -107,7 +107,7 @@ class Project(Resource):
             color = "green"
         elif project.status == 'failed':
             color = "red"
-        return get_badge("build", project.status, color, "github")
+        return redirect(get_badge("build", project.status, color, "github"), 202)
 
     @api_required
     def post(self, project_id):
