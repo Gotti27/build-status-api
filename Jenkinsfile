@@ -54,7 +54,7 @@ pipeline {
                     sh """
                     echo ${PRODUCTION_DOCKER_ENGINE}
                     DOCKER_HOST=${PRODUCTION_DOCKER_ENGINE} docker container ls -a
-                    DOCKER_HOST=${PRODUCTION_DOCKER_ENGINE} BRANCH=${env.BRANCH_NAME} docker compose -f docker-compose.yml --project-name buildStatusApi --env-file $JENKINS_HOME/.envvars/buildStatusApi/production.env up -d --build
+                    DOCKER_HOST=${PRODUCTION_DOCKER_ENGINE} BRANCH=${env.BRANCH_NAME} docker compose -f docker-compose.yml --project-name build-status-api --env-file $JENKINS_HOME/.envvars/buildStatusApi/production.env up -d --build
                     DOCKER_HOST=${PRODUCTION_DOCKER_ENGINE} docker container ls -a
                     """
                 }
