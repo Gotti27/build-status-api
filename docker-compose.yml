@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+    app:
+        image: "build-status-api:${BRANCH:-latest}"
+        restart: always
+        build:
+            context: ./application
+            network: host
+            dockerfile: Dockerfile
+        logging:
+            driver: json-file
+            options:
+                max-file: "10"
+                max-size: "5m"
+        ports:
+            - "45000:5000"
