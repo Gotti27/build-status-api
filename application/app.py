@@ -108,9 +108,7 @@ class Project(Resource):
         elif project.status == 'failed':
             color = "red"
 
-        redir = redirect(get_badge("build", project.status, color, "github"), code=302)
-        redir.cache_control.no_cache = True
-        return redir
+        return redirect(get_badge("build", project.status, color, "github"), code=302)
 
     @api_required
     def post(self, project_id):
