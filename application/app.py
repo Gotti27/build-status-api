@@ -140,7 +140,7 @@ migrate = Migrate(app, db)
 
 def get_badge(target: str, status: str, color: str, icon: str):
     # return f"https://badgen.net/badge/{target}/{status}/{color}?icon={icon}&cache=1"
-    return f"https://img.shields.io/static/v1?label={target}&message={status}&color={color}&logo={icon}&cacheSeconds=1"
+    return f"https://img.shields.io/static/v1?label={target}&message={status}&color={color}&logo={icon}&cacheSeconds=3600"
 
 
 api.add_resource(Project, '/projects/', '/projects/<project_id>')
