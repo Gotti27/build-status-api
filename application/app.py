@@ -136,7 +136,7 @@ migrate = Migrate(app, db)
 
 
 def get_badge(target: str, status: str, color: str, icon: str):
-    return f"https://badgen.net/badge/{target}/{status}/{color}?icon={icon}"
+    return f"https://badgen.net/badge/{target}/{status}/{color}?icon={icon}&cache=100"
 
 
 api.add_resource(Project, '/projects/', '/projects/<project_id>')
