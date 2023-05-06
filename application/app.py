@@ -104,7 +104,7 @@ class Project(Resource):
             return make_response("", 404)
         color = "yellow"
         if project.status == 'success':
-            color = "success"
+            color = "green"
         elif project.status == 'failed':
             color = "red"
 
