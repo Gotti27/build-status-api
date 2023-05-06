@@ -1,3 +1,5 @@
+import groovy.json.JsonOutput
+
 void setBuildStatus(String message, String state) {
     step([
         $class: "GitHubCommitStatusSetter",
