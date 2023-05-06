@@ -72,21 +72,15 @@ pipeline {
     post {
         success {
             setBuildStatus("Build succeeded", "SUCCESS");
-            when {
-                branch "master"
-            }
-            steps{
+            if (env.BRANCH_NAME == 'master') {
                 withEnv(readFile("$JENKINS_HOME/.envvars/buildStatusApi/jenkinsEnv.txt").split('\n') as List) {
-                    setBuildBadge(env.API_KEY, 2, "success");
+                    setBuildBadge(env.API_KEY, "2", "success");
                 }
             }
         }
         failure {
             setBuildStatus("Build failed", "FAILURE");
-            when {
-                branch "master"
-            }
-            steps{
+            if (env.BRANCH_NAME == 'master') {
                 withEnv(readFile("$JENKINS_HOME/.envvars/buildStatusApi/jenkinsEnv.txt").split('\n') as List) {
                     setBuildBadge(env.API_KEY, "2", "failed");
                 }
