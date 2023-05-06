@@ -10,10 +10,7 @@ void setBuildStatus(String message, String state) {
 
 void setBuildBadge(String apiKey, String projectId, String status) {
     def response = httpRequest contentType: "APPLICATION_JSON", httpMode: "POST", ignoreSslErrors: true
-        requestBody: JsonOutput.toJson({
-            status: status,
-            api_key: apiKey
-        }), url: "https://217.160.40.42:45001/projects/" + projectId
+        requestBody: JsonOutput.toJson([status: status, api_key: apiKey]), url: "https://217.160.40.42:45001/projects/" + projectId
     echo response
 }
 
