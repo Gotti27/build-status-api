@@ -88,7 +88,7 @@ pipeline {
             }
             steps{
                 withEnv(readFile("$JENKINS_HOME/.envvars/buildStatusApi/jenkinsEnv.txt").split('\n') as List) {
-                    setBuildBadge(env.API_KEY, 2, "failed");
+                    setBuildBadge(env.API_KEY, "2", "failed");
                 }
             }
         }
