@@ -107,7 +107,10 @@ class Project(Resource):
             color = "success"
         elif project.status == 'failed':
             color = "red"
-        return redirect(get_badge("build", project.status, color, "github"), code=302)
+
+        redir = redirect(get_badge("build", project.status, color, "github"), code=302)
+        redir.cache_control.no_cache = True
+        return redir
 
     @api_required
     def post(self, project_id):
@@ -137,7 +140,7 @@ migrate = Migrate(app, db)
 
 def get_badge(target: str, status: str, color: str, icon: str):
     # return f"https://badgen.net/badge/{target}/{status}/{color}?icon={icon}&cache=1"
-    return f"https://img.shields.io/static/v1?label={target}>&message={status}&color={color}&logo={icon}&cacheSeconds=1"
+    return f"https://img.shields.io/static/v1?label={target}&message={status}&color={color}&logo={icon}&cacheSeconds=1"
 
 
 api.add_resource(Project, '/projects/', '/projects/<project_id>')
