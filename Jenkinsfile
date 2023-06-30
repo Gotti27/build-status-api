@@ -11,8 +11,8 @@ void setBuildStatus(String message, String state) {
 }
 
 void setBuildBadge(String apiKey, String projectId, String status) {
-    httpRequest contentType: "APPLICATION_JSON", httpMode: "POST", ignoreSslErrors: true,
-        requestBody: JsonOutput.toJson([status: status, api_key: apiKey]), url: "https://217.160.40.42:45001/projects/" + projectId
+    httpRequest contentType: "APPLICATION_JSON", httpMode: "POST",
+        requestBody: JsonOutput.toJson([status: status, api_key: apiKey]), url: "https://status-api.mostserene.eu/projects/" + projectId
 }
 
 pipeline {
