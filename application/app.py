@@ -95,6 +95,9 @@ class ProjectModel(db.Model):
     def __repr__(self):
         return f"<Project {self.id}, {self.name}, status: {self.status}>"
 
+class Root(Resource):
+    def get(self):
+        return make_response('', 200)
 
 class Project(Resource):
     def get(self, project_id):
@@ -141,6 +144,7 @@ def get_badge(target: str, status: str, color: str, icon: str):
     # return f"https://img.shields.io/static/v1?label={target}&message={status}&color={color}&logo={icon}&cacheSeconds=3600"
 
 
+api.add_resource(Root, '/')
 api.add_resource(Project, '/projects/', '/projects/<project_id>')
 
 if __name__ == '__main__':
