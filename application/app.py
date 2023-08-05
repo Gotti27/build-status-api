@@ -107,11 +107,11 @@ class Project(Resource):
             return make_response("", 404)
         color = "yellow"
         if project.status == 'success':
-            return open('assets/success.svg', 'r').read()
+            color = "green"
         elif project.status == 'failed':
-            return open('assets/failure.svg', 'r').read()
+            color = "red"
 
-        return open('assets/pending.svg', 'r').read()
+        return redirect(get_badge("build", project.status, color, "github"), code=302)
 
     @api_required
     def post(self, project_id):
@@ -137,6 +137,11 @@ class Project(Resource):
 
 
 migrate = Migrate(app, db)
+
+
+def get_badge(target: str, status: str, color: str, icon: str):
+    return f"https://badgen.net/badge/{target}/{status}/{color}?icon={icon}"
+    # return f"https://img.shields.io/static/v1?label={target}&message={status}&color={color}&logo={icon}&cacheSeconds=3600"
 
 
 api.add_resource(Root, '/')
