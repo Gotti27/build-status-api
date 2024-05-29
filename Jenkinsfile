@@ -26,8 +26,8 @@ pipeline {
                 echo "Build started"
                 echo env.BRANCH_NAME
                 sh """
-                    cp $JENKINS_HOME/.envvars/buildStatusApi/flaskProd.env application/.env
-                    BRANCH=${env.BRANCH_NAME} docker compose -f docker-compose.yml --env-file $JENKINS_HOME/.envvars/buildStatusApi/.env build
+                    cp /envvars/buildStatusApi/flaskProd.env application/.env
+                    BRANCH=${env.BRANCH_NAME} docker compose -f docker-compose.yml --env-file /envvars/buildStatusApi/.env build
                 """
                 echo "Build finished"
             }
@@ -57,11 +57,11 @@ pipeline {
             steps {
                 echo 'Deliver started'
 
-                withEnv(readFile("$JENKINS_HOME/.envvars/buildStatusApi/jenkinsEnv.txt").split('\n') as List) {
+                withEnv(readFile("/envvars/buildStatusApi/jenkinsEnv.txt").split('\n') as List) {
                     sh """
                     echo ${PRODUCTION_DOCKER_ENGINE}
                     DOCKER_HOST=${PRODUCTION_DOCKER_ENGINE} docker container ls -a
-                    DOCKER_HOST=${PRODUCTION_DOCKER_ENGINE} BRANCH=${env.BRANCH_NAME} docker compose -f docker-compose.yml --project-name build-status-api --env-file $JENKINS_HOME/.envvars/buildStatusApi/production.env up -d --build
+                    DOCKER_HOST=${PRODUCTION_DOCKER_ENGINE} BRANCH=${env.BRANCH_NAME} docker compose -f docker-compose.yml --project-name build-status-api --env-file /envvars/buildStatusApi/production.env up -d --build
                     DOCKER_HOST=${PRODUCTION_DOCKER_ENGINE} docker container ls -a
                     """
                 }
@@ -75,7 +75,7 @@ pipeline {
             setBuildStatus("Build succeeded", "SUCCESS");
             script {
                 if (env.BRANCH_NAME == 'master') {
-                    withEnv(readFile("$JENKINS_HOME/.envvars/buildStatusApi/jenkinsEnv.txt").split('\n') as List) {
+                    withEnv(readFile("/envvars/buildStatusApi/jenkinsEnv.txt").split('\n') as List) {
                         setBuildBadge(env.API_KEY, "2", "success");
                     }
                 }
@@ -85,7 +85,7 @@ pipeline {
             setBuildStatus("Build failed", "FAILURE");
             script {
                 if (env.BRANCH_NAME == 'master') {
-                    withEnv(readFile("$JENKINS_HOME/.envvars/buildStatusApi/jenkinsEnv.txt").split('\n') as List) {
+                    withEnv(readFile("/envvars/buildStatusApi/jenkinsEnv.txt").split('\n') as List) {
                         setBuildBadge(env.API_KEY, "2", "failed");
                     }
                 }
